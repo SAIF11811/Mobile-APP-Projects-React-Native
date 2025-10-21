@@ -16,7 +16,6 @@ const AppNavigator = () => {
           headerTitleAlign: "center",
           headerTintColor: "white",
           sheetElevation: 30,
-          statusBarHidden: true,
           headerTitleStyle: {
             fontWeight: "bold",
             fontSize: 30,
@@ -34,7 +33,6 @@ const AppNavigator = () => {
           headerTitleAlign: "center",
           headerTintColor: "white",
           sheetElevation: 30,
-          statusBarHidden: true,
           headerTitleStyle: {
             fontWeight: "bold",
             fontSize: 30,
