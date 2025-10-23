@@ -1,24 +1,26 @@
 import { useState } from "react";
-import Toast from "react-native-toast-message";
 import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
   Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import Toast from "react-native-toast-message";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/slices/cartSlice";
 
 const { width } = Dimensions.get("window");
 
-const ProductDetailsScreen = ({ route, addToCart }) => {
+const ProductDetailsScreen = ({ route }) => {
   const { product } = route.params;
   const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    addToCart(product, quantity);
-
+    dispatch(addToCart({ product, quantity }));
     Toast.show({
       type: "success",
       text1: "Added to Cart",

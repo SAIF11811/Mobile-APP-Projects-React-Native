@@ -1,12 +1,15 @@
+import { Ionicons } from "@expo/vector-icons";
 import {
-  View,
-  Text,
+  Alert,
   FlatList,
   Image,
-  TouchableOpacity,
   StyleSheet,
-  Alert,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { clearCart, removeFromCart } from "../redux/slices/cartSlice";
 
 const COLORS = {
   primary: "#007AFF",
@@ -17,7 +20,10 @@ const COLORS = {
   border: "#E5E5EA",
 };
 
-const CartScreen = ({ cartItems, removeItem }) => {
+const CartScreen = () => {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * (item.quantity || 1),
     0
@@ -43,6 +49,7 @@ const CartScreen = ({ cartItems, removeItem }) => {
     Alert.alert("Receipt", receiptMessage, [{ text: "OK" }], {
       cancelable: true,
     });
+    dispatch(clearCart());
   };
 
   return (
@@ -73,8 +80,11 @@ const CartScreen = ({ cartItems, removeItem }) => {
                     ${item.price.toFixed(2)} × {item.quantity || 1}
                   </Text>
                 </View>
-                <TouchableOpacity onPress={() => removeItem(item.id)}>
-                  <Text style={styles.remove}>Remove</Text>
+                <TouchableOpacity
+                  onPress={() => dispatch(removeFromCart(item.id))}
+                  style={styles.removeIconContainer}
+                >
+                  <Ionicons name="trash-sharp" size={22} color="#FF3B30" />
                 </TouchableOpacity>
               </View>
             )}
@@ -135,7 +145,15 @@ const styles = StyleSheet.create({
   info: { flex: 1, marginLeft: 12 },
   name: { fontSize: 16, fontWeight: "600", color: COLORS.text },
   price: { color: COLORS.primary, marginTop: 4, fontSize: 15 },
-  remove: { color: "red", fontWeight: "600" },
+  removeIconContainer: {
+    padding: 6,
+    borderRadius: 8,
+    backgroundColor: "#FDECEC",
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    marginLeft: 10,
+  },
   totalContainer: {
     backgroundColor: COLORS.white,
     borderRadius: 14,

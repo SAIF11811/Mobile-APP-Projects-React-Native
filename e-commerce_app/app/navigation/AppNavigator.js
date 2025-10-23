@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Ionicons } from "@expo/vector-icons";
-
-import HomeScreen from "../screens/HomeScreen";
-import CategoriesScreen from "../screens/CategoriesScreen";
+import { useState } from "react";
 import CartScreen from "../screens/CartScreen";
+import CategoriesScreen from "../screens/CategoriesScreen";
+import HomeScreen from "../screens/HomeScreen";
 import ProductDetailsScreen from "../screens/ProductDetailsScreen";
 
 const Tab = createBottomTabNavigator();

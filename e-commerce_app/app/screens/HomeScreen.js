@@ -1,12 +1,11 @@
-import React from "react";
 import {
-  View,
+  Dimensions,
+  Image,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
-  StatusBar,
-  Image,
-  Dimensions,
+  View,
 } from "react-native";
 
 const COLORS = {
@@ -59,13 +58,13 @@ const HomeScreen = () => {
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
 
       <View style={styles.welcomeContainer}>
-        <Text style={styles.welcomeText}>Welcome !{" 👋"}</Text>
+        <Text style={styles.welcomeText}>Welcome! 👋</Text>
         <Text style={styles.subText}>Discover our latest offers today.</Text>
       </View>
 
       <Text style={styles.sectionTitle}>Current Offers</Text>
       <ScrollView
-        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         style={styles.offersContainer}
       >
         {offers.map((offer) => (
@@ -88,8 +87,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     marginBottom: 10,
     padding: 20,
-    borderEndEndRadius: 20,
-    borderEndStartRadius: 20,
+    borderBottomEndRadius: 20,
+    borderBottomStartRadius: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.5,
@@ -106,7 +105,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "lightgrey",
   },
-
   sectionTitle: {
     fontSize: 22,
     fontWeight: "700",
@@ -114,7 +112,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     marginBottom: 15,
   },
-
   offersContainer: { marginBottom: 20 },
   offerCard: {
     width: width * 0.9,

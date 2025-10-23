@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
-  View,
-  Text,
   FlatList,
-  TouchableOpacity,
   StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { products } from "../data/products";
+import { useSelector } from "react-redux";
 import ProductCard from "../components/ProductCard";
 
 const COLORS = {
@@ -18,6 +18,7 @@ const COLORS = {
 };
 
 const CategoriesScreen = ({ navigation }) => {
+  const products = useSelector((state) => state.products.list);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const categories = ["All", ...new Set(products.map((p) => p.category))];
 
@@ -69,6 +70,8 @@ const CategoriesScreen = ({ navigation }) => {
           />
         )}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 80 }}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
       />
     </View>
   );
