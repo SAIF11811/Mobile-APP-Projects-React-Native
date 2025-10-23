@@ -1,4 +1,6 @@
+import { useEffect, useRef } from "react";
 import {
+  Animated,
   Dimensions,
   Image,
   ScrollView,
@@ -53,18 +55,52 @@ const offers = [
 const { width } = Dimensions.get("window");
 
 const HomeScreen = () => {
+  const waveAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(waveAnim, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(waveAnim, {
+          toValue: -1,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(waveAnim, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [waveAnim]);
+
+  const rotate = waveAnim.interpolate({
+    inputRange: [-1, 1],
+    outputRange: ["-20deg", "20deg"],
+  });
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
 
       <View style={styles.welcomeContainer}>
-        <Text style={styles.welcomeText}>Welcome! 👋</Text>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={styles.welcomeText}>Welcome!</Text>
+          <Animated.Text style={[styles.wave, { transform: [{ rotate }] }]}>
+            👋
+          </Animated.Text>
+        </View>
         <Text style={styles.subText}>Discover our latest offers today.</Text>
       </View>
 
       <Text style={styles.sectionTitle}>Current Offers</Text>
       <ScrollView
-        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
         style={styles.offersContainer}
       >
         {offers.map((offer) => (
@@ -87,8 +123,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     marginBottom: 10,
     padding: 20,
-    borderBottomEndRadius: 20,
-    borderBottomStartRadius: 20,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.5,
@@ -99,11 +135,15 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "700",
     color: "white",
-    marginBottom: 5,
+    marginRight: 8,
+  },
+  wave: {
+    fontSize: 28,
   },
   subText: {
     fontSize: 16,
     color: "lightgrey",
+    marginTop: 5,
   },
   sectionTitle: {
     fontSize: 22,
